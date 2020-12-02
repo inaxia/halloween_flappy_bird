@@ -14,3 +14,11 @@ We have recreated the classic game Flappy Bird with Halloween theme, using the p
     - `sys`
     - `random`
 4. Run the code 
+
+Ignore the errors and warnings, it won't bother you
+
+## Demo video
+![](gallery/assets/video.gif)
+
+## Support
+If you like this project, don't forget to give it a ⭐

@@ -16,14 +16,13 @@ BACKGROUND = 'gallery/sprites/background.png'
 PIPE = 'gallery/sprites/pipe.png'
 
 def welcomeScreen():
-    
     #Shows welcome images on the screen
-    
     playerx = int(SCREENWIDTH/5)
     playery = int((SCREENHEIGHT - GAME_SPRITES['player'].get_height())/2)
     messagex = int((SCREENWIDTH - GAME_SPRITES['message'].get_width())/2)
     messagey = int(SCREENHEIGHT*0.13)
     basex = 0
+
     while True:
         for event in pygame.event.get():
             # if user clicks on cross button, close the game
@@ -64,15 +63,12 @@ def mainGame():
     ]
 
     pipeVelX = -4
-
     playerVelY = -9
     playerMaxVelY = 10
     playerMinVelY = -8
     playerAccY = 1
-
     playerFlapAccv = -8 # velocity while flapping
     playerFlapped = False # It is true only when the bird is flapping
-
 
     while True:
         for event in pygame.event.get():
@@ -84,7 +80,6 @@ def mainGame():
                     playerVelY = playerFlapAccv
                     playerFlapped = True
                     GAME_SOUNDS['wing'].play()
-
 
         crashTest = isCollide(playerx, playery, upperPipes, lowerPipes) # This function will return true if the player is crashed
         if crashTest:
@@ -98,7 +93,6 @@ def mainGame():
                 score +=1
                 print(f"Your score is {score}") 
                 GAME_SOUNDS['point'].play()
-
 
         if playerVelY <playerMaxVelY and not playerFlapped:
             playerVelY += playerAccY
@@ -178,44 +172,39 @@ def getRandomPipe():
     return pipe
 
 
+# This will be the main point from where our game will start
+pygame.init() # Initialize all pygame's modules
+FPSCLOCK = pygame.time.Clock()
+pygame.display.set_caption('Flappy Bird by Inaxia')
+GAME_SPRITES['numbers'] = ( 
+    pygame.image.load('gallery/sprites/0.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/1.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/2.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/3.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/4.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/5.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/6.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/7.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/8.png').convert_alpha(),
+    pygame.image.load('gallery/sprites/9.png').convert_alpha(),
+)
 
+GAME_SPRITES['message'] =pygame.image.load('gallery/sprites/message.png').convert_alpha()
+GAME_SPRITES['base'] =pygame.image.load('gallery/sprites/base.png').convert_alpha()
+GAME_SPRITES['pipe'] =(pygame.transform.rotate(pygame.image.load( PIPE).convert_alpha(), 180), 
+pygame.image.load(PIPE).convert_alpha()
+)
 
+# Game sounds
+GAME_SOUNDS['die'] = pygame.mixer.Sound('gallery/audio/die.wav')
+GAME_SOUNDS['hit'] = pygame.mixer.Sound('gallery/audio/hit.wav')
+GAME_SOUNDS['point'] = pygame.mixer.Sound('gallery/audio/point.wav')
+GAME_SOUNDS['swoosh'] = pygame.mixer.Sound('gallery/audio/swoosh.wav')
+GAME_SOUNDS['wing'] = pygame.mixer.Sound('gallery/audio/wing.wav')
 
+GAME_SPRITES['background'] = pygame.image.load(BACKGROUND).convert()
+GAME_SPRITES['player'] = pygame.image.load(PLAYER).convert_alpha()
 
-if __name__ == "__main__":
-    # This will be the main point from where our game will start
-    pygame.init() # Initialize all pygame's modules
-    FPSCLOCK = pygame.time.Clock()
-    pygame.display.set_caption('Flappy Bird by Inaxia')
-    GAME_SPRITES['numbers'] = ( 
-        pygame.image.load('gallery/sprites/0.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/1.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/2.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/3.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/4.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/5.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/6.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/7.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/8.png').convert_alpha(),
-        pygame.image.load('gallery/sprites/9.png').convert_alpha(),
-    )
-
-    GAME_SPRITES['message'] =pygame.image.load('gallery/sprites/message.png').convert_alpha()
-    GAME_SPRITES['base'] =pygame.image.load('gallery/sprites/base.png').convert_alpha()
-    GAME_SPRITES['pipe'] =(pygame.transform.rotate(pygame.image.load( PIPE).convert_alpha(), 180), 
-    pygame.image.load(PIPE).convert_alpha()
-    )
-
-    # Game sounds
-    GAME_SOUNDS['die'] = pygame.mixer.Sound('gallery/audio/die.wav')
-    GAME_SOUNDS['hit'] = pygame.mixer.Sound('gallery/audio/hit.wav')
-    GAME_SOUNDS['point'] = pygame.mixer.Sound('gallery/audio/point.wav')
-    GAME_SOUNDS['swoosh'] = pygame.mixer.Sound('gallery/audio/swoosh.wav')
-    GAME_SOUNDS['wing'] = pygame.mixer.Sound('gallery/audio/wing.wav')
-
-    GAME_SPRITES['background'] = pygame.image.load(BACKGROUND).convert()
-    GAME_SPRITES['player'] = pygame.image.load(PLAYER).convert_alpha()
-
-    while True:
-        welcomeScreen() # Shows welcome screen to the user until he presses a button
-        mainGame() # This is the main game function 
+while True:
+    welcomeScreen() # Shows welcome screen to the user until he presses a button
+    mainGame() # This is the main game function 
